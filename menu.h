@@ -91,10 +91,12 @@ void loginMenu(){
         welcome(loggedIn); //tampilkan login header
         puts("");
         PrintFriends(loggedIn);
+        puts("");
 
         printLine();
         puts("         >> Menu <<         ");
         printLine();
+        puts("");
 
         puts("[1] Add Friend");
         puts("[2] Remove Friend");

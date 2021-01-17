@@ -237,7 +237,6 @@ int CheckRequest(char *sender, char *receiver){
 }
 
 void pushRequest(char *sender, char *receiver){
-    
     Account *curr = head;
 
     while(curr){
@@ -283,6 +282,25 @@ void pushFriends(char *sender, char *receiver)
                 temp->next = curr->friendHead;
                 curr->friendHead = temp;
             }
+
+            // Requests *curr2 = curr->reqHead;
+            // Requests *temp2;
+
+            // if(strcmp(curr2->username,sender)==0){
+            //     temp2 = curr->reqHead->next;
+            //     curr->reqHead = NULL;
+            //     free(curr->reqHead);
+            //     curr->reqHead = temp2;
+            // }else{
+            //     while(curr2){
+            //         if(strcmp(curr2->next->username, receiver)==0){
+            //             temp2 = curr2->next->next;
+            //             free(curr2->next);
+            //             curr2->next = NULL;
+            //             curr2->next = temp2;
+            //         }
+            //     }
+            // }
         }
 
         if(strcmp(sender, curr->username) == 0){
@@ -294,8 +312,26 @@ void pushFriends(char *sender, char *receiver)
                 temp->next = curr->friendHead;
                 curr->friendHead = temp;
             }
+
+            // Sents *curr2 = curr->sentHead;
+            // Sents *temp2;
+
+            // if(strcmp(curr2->username,sender)==0){
+            //     temp2 = curr->sentHead->next;
+            //     curr->sentHead = NULL;
+            //     free(curr->sentHead);
+            //     curr->sentHead = temp2;
+            // }else{
+            //     while(curr2){
+            //         if(strcmp(curr2->next->username, receiver)==0){
+            //             temp2 = curr2->next->next;
+            //             free(curr2->next);
+            //             curr2->next = NULL;
+            //             curr2->next = temp2;
+            //         }
+            //     }
+            // }
         }
-        
         curr = curr->next;
     }
 }
@@ -306,31 +342,11 @@ void deleteFriend(char *sender, char *receiver)
 
     while(curr){
         if(strcmp(receiver, curr->username) == 0){
-            Friends *curr2 = curr->friendHead;
-            Friends *temp;
-
-            while(curr2){
-                if(strcmp(curr2->next->username, sender)==0){
-                    temp = curr2->next->next;
-                    free(curr2->next);
-                    curr2->next = NULL;
-                    curr2->next = temp;
-                }
-            }
+            //pop friend
         }
 
         if(strcmp(sender, curr->username) == 0){
-            Friends *curr2 = curr->friendHead;
-            Friends *temp;
-
-            while(curr2){
-                if(strcmp(curr2->next->username, receiver)==0){
-                    temp = curr2->next->next;
-                    free(curr2->next);
-                    curr2->next = NULL;
-                    curr2->next = temp;
-                }
-            }
+            // pop friend
         }
     }
 }
