@@ -1,4 +1,7 @@
 // ARROW KEYS
+#include "utils.h"
+// #include<stdlib.h>
+
 #define up 72
 #define down 80
 #define left 75
@@ -14,6 +17,7 @@ void regis();
 void login();
 void logout();
 void addFriend();
+void removeFriend();
 void viewInbox();
 void viewSent();
 
@@ -42,7 +46,7 @@ void welcome(const char *name){
 
 void title(const char *text){
     puts("=============================================");
-    printf("         %s",text);
+    printf("         %s\n",text);
     puts("=============================================");
 }
 
@@ -51,7 +55,7 @@ void mainMenu(){
     int menu = -1;
     
     do{
-        system("cls");
+        system("@cls||clear");
         header();
         PrintUser();
 
@@ -72,9 +76,10 @@ void mainMenu(){
         case 1: regis(); break;
         case 2: login(); break;
         case 3: return; break;
-        case 0: return; break;
         default: break;
     }
+
+    return;
 }
 
 void loginMenu(){
@@ -82,7 +87,7 @@ void loginMenu(){
     int menu = -1;
     
     do{
-        system("cls");
+        system("@cls||clear");
         welcome(loggedIn); //tampilkan login header
         puts("");
         PrintFriends(loggedIn);
@@ -228,7 +233,7 @@ void removeFriend(){
     }while(!CheckUsername(username) && strcmp(username,"0")!=0);
 
     if(CheckUsername(username)){
-        removeFriend(loggedIn, username);
+        deleteFriend(loggedIn, username);
         puts("");
         printf("-- Removed %s as friend --\n",username);
         printf("Press enter to continue");
@@ -285,7 +290,7 @@ void dashboard(){
 
     int menu = -1;
     do{
-        system("cls");
+        system("@cls||clear");
         title("DASHBOARD");
         puts("");
         puts("[1] Public Posts");
@@ -307,12 +312,11 @@ void dashboard(){
 }
 
 void publicNotes(){
-    int page = 1;
     char key;
     
     while(1){
 
-        system("cls");
+        system("@cls||clear");
         title("PUBLIC POSTS");
         puts("");
         puts("[Notes]");
