@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <conio.h>
-
+int page = 1;
 // #################################### INITIALIZE STRUCT ####################################
 struct Friends{
     char username[25];
@@ -22,16 +22,18 @@ struct Comments{
     char username[25];
     char comment[256];
     int likes;
+    int num; 
     Comments *next;
-};
+}*headcom, *tailcom;
 struct Notes{
     char notes[256];
+    int id;
     char category[20];
     int announced; // 1 = yes, 0 = no
     int privatecheck; // 1 = public , 0 = private
     Comments *cmntHead;
     Notes *next;
-};
+}*headnote;
 struct Account{
     char username[25];
     char password[25];
@@ -73,22 +75,25 @@ Sents *createSent(char *username){
     temp->next = NULL;
     return temp;
 }
-Comments *createComment(char *username, char *comment, int likes){
+Comments *createComment(char *username, char *comment, int num){
     Comments *temp = (Comments*)malloc(sizeof(Comments));
     strcpy(temp->comment , comment);
-    temp->likes = likes;
     temp->next = NULL;
+    temp->num = num;
+    return temp;
 }
-Notes *createNote(char *notes, char *category, int announced, int privatecheck){
+Notes *createNote(char *notes, char *category, int announced, int privatecheck, int id){
     Notes *temp = (Notes*)malloc(sizeof(Notes));
     strcpy(temp->notes, notes);
     strcpy(temp->category, category);
     temp->announced = announced;
     temp->privatecheck = privatecheck;
+    temp->id = id;
     temp->cmntHead = NULL;
     temp->next = NULL;
     return temp;
 }
+
 // #################################### PRINT ALL'S ####################################
 
 void PrintUser()
@@ -100,7 +105,7 @@ void PrintUser()
     int i = 1;
     while(curr != NULL)
     {
-        printf("%2d     %s\n", i++, curr->username);
+        printf("%2d      %s\n", i++, curr->username);
         curr = curr->next;
     }
 }
@@ -294,3 +299,49 @@ void pushFriends(char *sender, char *receiver)
 //     free(temp); 
 // }
 
+// ######## POST ###########
+
+void pushNotes(char *username, char *notes, char *category, int announced, int privatecheck, int id){
+    Account *curr = head;
+
+    while(curr){
+        if(strcmp(username, curr->username) == 0){
+            Notes *temp = createNote(notes, category, announced, privatecheck, id);
+
+            if(!curr->noteHead){
+                curr->noteHead = temp;
+            } else { 
+                temp->next = curr->noteHead;
+                curr->noteHead = temp;
+            }
+        }
+    }
+}
+void pushComment(char *username, char *comment, char *tempnote, int num)
+{
+    Account *curr = head;
+    Notes *current = headnote;
+    while(curr)
+    {
+        if(strcmp(username, curr->username) == 0)
+        {
+            while(current)
+            {
+                if(strcmp(current->notes,  tempnote) == 0)
+                {
+                    Comments *temp = createComment(username, comment, num);
+                    Comments *cur = headcom;
+                    if(!cur)
+                    {
+                        headcom = temp;
+                    } else 
+                    {
+                        tailcom->next = temp;
+                        tailcom = temp;
+                    }
+                }
+            }
+
+        }
+    }
+}

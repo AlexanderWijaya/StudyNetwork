@@ -1,4 +1,5 @@
 // ARROW KEYS
+#include "utils.h"
 #define up 72
 #define down 80
 #define left 75
@@ -22,28 +23,28 @@ void publicNotes();
 void yourPost();
 
 void printLine(){
-    puts("----------------------------");
+    puts("----------------------------\n");
 }
 
 void header(){ // print heading
-    puts("=============================================");
-    puts("                STUDY NETWORK                ");
-    puts("=============================================");
+    puts("=============================================\n");
+    puts("                STUDY NETWORK                \n");
+    puts("=============================================\n");
     puts("");
 }
 
 void welcome(const char *name){
-    puts("=============================================");
+    puts("=============================================\n");
     printf("Welcome, %s\n",name);
-    puts("=============================================");
+    puts("=============================================\n");
     printf("Logged in: %s",loggedInTime);
     printLine();
 }
 
 void title(const char *text){
-    puts("=============================================");
-    printf("         %s",text);
-    puts("=============================================");
+    puts("=============================================\n");
+    printf("         %s\n",text);
+    puts("=============================================\n");
 }
 
 void mainMenu(){
@@ -51,7 +52,7 @@ void mainMenu(){
     int menu = -1;
     
     do{
-        system("cls");
+        system("cls|clear");
         header();
         PrintUser();
 
@@ -79,7 +80,7 @@ void mainMenu(){
 
 void loginMenu(){
 
-    puts("=============================================");
+    puts("=============================================\n");
     printf("    Welcome, %s\n",loggedIn);
     puts("=============================================");
     puts("");
@@ -87,7 +88,7 @@ void loginMenu(){
     int menu = -1;
     
     do{
-        system("cls");
+        system("cls|clear");
         welcome(loggedIn); //tampilkan login header
 
         printLine();
@@ -263,7 +264,7 @@ void dashboard(){
 
     int menu = -1;
     do{
-        system("cls");
+        system("cls|clear");
         title("DASHBOARD");
         puts("");
         puts("[1] Public Posts");
@@ -285,12 +286,11 @@ void dashboard(){
 }
 
 void publicNotes(){
-    int page = 1;
     char key;
     
     while(1){
 
-        system("cls");
+        system("cls|clear");
         title("PUBLIC POSTS");
         puts("");
         puts("[Notes]");
