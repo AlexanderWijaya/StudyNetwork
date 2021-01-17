@@ -79,16 +79,13 @@ void mainMenu(){
 
 void loginMenu(){
 
-    puts("=============================================");
-    printf("    Welcome, %s\n",loggedIn);
-    puts("=============================================");
-    puts("");
-
     int menu = -1;
     
     do{
         system("cls");
         welcome(loggedIn); //tampilkan login header
+        puts("");
+        PrintFriends(loggedIn);
 
         printLine();
         puts("         >> Menu <<         ");
@@ -110,7 +107,7 @@ void loginMenu(){
 
     switch(menu){
         case 1: addFriend(); break;
-        case 2: break;
+        case 2: removeFriend(); break;
         case 3: viewInbox(); break;
         case 4: viewSent(); break;
         case 5: dashboard(); break;
@@ -210,10 +207,35 @@ void addFriend(){
         puts("");
         printf("-- Sent request to %s --\n",username);
         printf("Press enter to continue");
+        getchar();
     }
-    getchar();
 
     loginMenu();
+}
+
+void removeFriend(){
+    char username[25];
+    puts("");
+    PrintFriends(loggedIn);
+    puts("");
+
+    printf("Which user do you want to remove? [0 to cancel]\n");
+    do{
+        printf(">> ");
+        scanf("%s",username); getchar();
+
+        if(!CheckUsername(username)) puts("Invalid Username");
+    }while(!CheckUsername(username) && strcmp(username,"0")!=0);
+
+    if(CheckUsername(username)){
+        removeFriend(loggedIn, username);
+        puts("");
+        printf("-- Removed %s as friend --\n",username);
+        printf("Press enter to continue");
+        getchar();
+    }
+
+    loginMenu();    
 }
 
 void viewInbox(){
@@ -237,7 +259,7 @@ void viewInbox(){
         pushFriends(username, loggedIn);
 
         puts("");
-        printf("-- You and %s are now friends! --\n",username);
+        printf("-- You and %s are now friends! --\n",username); 
         printf("Press enter to continue");
         getchar();
     }
