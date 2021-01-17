@@ -20,7 +20,7 @@ void addFriend();
 void removeFriend();
 void viewInbox();
 void viewSent();
-
+void comment();
 void dashboard();
 void publicNotes();
 void yourPost();
@@ -315,23 +315,27 @@ void dashboard(){
 
 void publicNotes(){
     char key;
-    
-    while(1){
-
         system("@cls||clear");
         title("PUBLIC POSTS");
         puts("");
         puts("[Notes]");
 
         // PrintNotes(page);
-
+		
         puts("[C] Add Comment");
         puts("[V] View Comment");
         puts("[X] Back to Dashboard");
-
+        puts("	[<]		[>]");
+    
+    while(1){
+		
         while(kbhit()){
             key = getch();
-
+			
+			if(key=="C")
+			{
+			 	
+			}
             if(key==left){
                 //puts("LEFT KEY PRESSED");
                 if(page > 1) page--;
@@ -342,7 +346,10 @@ void publicNotes(){
         }
     }
 }
-
+void post()
+{
+		
+}
 void yourPost(){
     int page = 1;
     char key;
