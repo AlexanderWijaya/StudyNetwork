@@ -54,6 +54,7 @@ Account *createAcc(char *username, char *password){
     temp->reqHead = NULL;
     temp->sentHead = NULL;
     temp->noteHead = NULL;
+    temp->friendHead = NULL;
     temp->next = NULL;
     return temp;
 }
@@ -111,20 +112,25 @@ void PrintUser()
 }
 void PrintFriends(char *username)
 {
-    while(head != NULL)
-    {
-        if(strcmp(username, head->username) == 0)
-        {
-            int i = 1;
-            while(head->friendHead != NULL)
-            {
-                printf("%3d. %s\n", i++, head->friendHead->username);
-                head->friendHead->next;
+    Account *curr = head;
+
+    puts("[Your Friends]");
+    puts("No.     Username");
+
+    while(curr){
+        if(strcmp(username,curr->username) == 0){
+            Friends *curr2 = curr->friendHead;
+                int i=1;
+                while(curr2){
+                    printf("%2d      %s\n", i++, curr2->username);
+                    curr2 = curr2->next;
+                }
+                return;
             }
+            curr = curr->next;
         }
-        head = head->next;
     }
-}
+
 void PrintRequest(char *username){
     Account *curr = head;
 
@@ -137,7 +143,7 @@ void PrintRequest(char *username){
         Requests *curr2 = curr->reqHead;
             int i=1;
             while(curr2){
-                printf("%2d     %s\n", i++, curr2->username);
+                printf("%2d      %s\n", i++, curr2->username);
                 curr2 = curr2->next;
             }
             return;
@@ -157,7 +163,7 @@ void PrintSent(char *username){
         Sents *curr2 = curr->sentHead;
             int i=1;
             while(curr2){
-                printf("%2d     %s\n", i++, curr2->username);
+                printf("%2d      %s\n", i++, curr2->username);
                 curr2 = curr2->next;
             }
             return;
@@ -231,7 +237,6 @@ int CheckRequest(char *sender, char *receiver){
 }
 
 void pushRequest(char *sender, char *receiver){
-    
     Account *curr = head;
 
     while(curr){
@@ -269,35 +274,84 @@ void pushFriends(char *sender, char *receiver)
 
     while(curr){
         if(strcmp(receiver, curr->username) == 0){
-            Friends *curr2 = curr->friendHead;
             Friends *temp = createFriend(sender);
 
-            if(!head) { 
-                curr2 = temp;
+            if(!curr->friendHead) {
+                curr->friendHead = temp;
             } else { 
-                temp->next = curr2;
-                curr2 = temp;
+                temp->next = curr->friendHead;
+                curr->friendHead = temp;
             }
+
+            // Requests *curr2 = curr->reqHead;
+            // Requests *temp2;
+
+            // if(strcmp(curr2->username,sender)==0){
+            //     temp2 = curr->reqHead->next;
+            //     curr->reqHead = NULL;
+            //     free(curr->reqHead);
+            //     curr->reqHead = temp2;
+            // }else{
+            //     while(curr2){
+            //         if(strcmp(curr2->next->username, receiver)==0){
+            //             temp2 = curr2->next->next;
+            //             free(curr2->next);
+            //             curr2->next = NULL;
+            //             curr2->next = temp2;
+            //         }
+            //     }
+            // }
+        }
+
+        if(strcmp(sender, curr->username) == 0){
+            Friends *temp = createFriend(receiver);
+
+            if(!curr->friendHead) { 
+                curr->friendHead = temp;
+            } else { 
+                temp->next = curr->friendHead;
+                curr->friendHead = temp;
+            }
+
+            // Sents *curr2 = curr->sentHead;
+            // Sents *temp2;
+
+            // if(strcmp(curr2->username,sender)==0){
+            //     temp2 = curr->sentHead->next;
+            //     curr->sentHead = NULL;
+            //     free(curr->sentHead);
+            //     curr->sentHead = temp2;
+            // }else{
+            //     while(curr2){
+            //         if(strcmp(curr2->next->username, receiver)==0){
+            //             temp2 = curr2->next->next;
+            //             free(curr2->next);
+            //             curr2->next = NULL;
+            //             curr2->next = temp2;
+            //         }
+            //     }
+            // }
         }
         curr = curr->next;
     }
 }
 
-// void deleteFriend(char *username) 
-// { 
-//     if (friendHead == NULL) 
-//     {
-//         return; 
-//     }
-//     struct Friends* temp = friendHead, *prev; 
-//     while(temp != NULL && strcmp(temp->username, username) != 0)
-//     {
-//         prev = temp;
-//         temp = temp->next;
-//     }
-//     prev->next = temp->next;
-//     free(temp); 
-// }
+void deleteFriend(char *sender, char *receiver)
+{
+    Account *curr = head;
+
+    while(curr){
+        if(strcmp(receiver, curr->username) == 0){
+            //pop friend
+        }
+
+        if(strcmp(sender, curr->username) == 0){
+            // pop friend
+        }
+    }
+}
+
+// #################################### PUBLIC DASHBOARD ####################################
 
 // ######## POST ###########
 
